@@ -1,4 +1,4 @@
-ARG PGVERSION
+ARG PGVERSION=12
 
 # base build image
 FROM golang:1.14-buster AS build_base
@@ -25,6 +25,11 @@ RUN make
 ####### Build the final image
 #######
 FROM postgres:$PGVERSION
+RUN apt-get update \
+      && apt-cache showpkg postgresql-$PG_MAJOR-rum \
+      && apt-get install -y --no-install-recommends \
+           postgresql-$PG_MAJOR-rum 
+      # && rm -rf /var/lib/apt/lists/*
 
 RUN useradd -ms /bin/bash stolon
 
