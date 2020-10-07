@@ -1,4 +1,4 @@
-ARG PGVERSION=12
+ARG PGVERSION=13
 
 # base build image
 FROM golang:1.14-buster AS build_base
